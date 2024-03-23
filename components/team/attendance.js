@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, View, ScrollView } from 'react-native';
-import axios from 'axios';
+import { StyleSheet, View } from 'react-native';
+import axios from '../../axios/axios'
 import { DataTable } from 'react-native-paper';
 
 const Attendance = ({ props }) => {
@@ -11,7 +11,7 @@ const Attendance = ({ props }) => {
             playerName: props.playerName
         }
         try{
-            const response = await axios.post('http://10.0.0.128:8000/attendance/player', data);
+            const response = await axios.post('/attendance/player', data);
             setAttendanceData(response.data.report)
             console.log(response.data.report)
         }catch(error) {

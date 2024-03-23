@@ -23,7 +23,42 @@ router.post("/add", async (req, res) => {
         console.log('Error adding player', error);
         res.status(500).json({ message: 'Failed to add players' });
     }
-})
+});
+
+router.post('/delete', async(req, res) => {
+
+    const { player } = req.body
+
+    try {
+        const result = await Player.deleteOne({ _id: player });
+        res.status(201).json(result);
+    } catch (error) {
+        console.log('Error deleting player', error);
+        res.status(500).json({ message: 'Failed to delete player' });
+    }
+});
+
+router.post('/update', async(req, res) => {
+    try {
+        const { playerId, playerName, playerPosition, playerNumber, team } = req.body;
+
+        let result = await Player.findOne({ _id: playerId });
+
+        result.playerName = playerName;
+        result.playerPosition = playerPosition;
+        result.playerNumber = playerNumber;
+        result.team = team;
+       
+     
+        //Store new coach
+        const saved = await result.save();
+
+        res.status(200).json({ message: `User ${saved.name} updated`});
+    } catch (error) {
+        console.log('Error updating player', error);
+        res.status(500).json({ message: 'Failed to update player' });
+    }
+});
 
 router.post("/player", async (req, res) => {
     try {
@@ -49,12 +84,25 @@ router.post("/byTeam", async (req, res) => {
         console.log('Error retrieving players', error);
         res.status(500).json({ message: 'Failed to get players' });
     }
-})
+});
+
+router.post("/", async (req, res) => {
+    try {
+        const { playerId } = req.body;
+        const players = await Player.findOne({ _id: playerId })
+        .populate('team');
+        res.status(201).json(players);
+    } catch (error) {
+        console.log('Error retrieving players', error);
+        res.status(500).json({ message: 'Failed to get players' });
+    }
+});
 
 
 router.get("/", async (req, res) => {
     try {
-        const players = await Player.find();
+        const players = await Player.find()
+        .populate('team');
         res.status(201).json(players);
     } catch (error) {
         console.log('Error retrieving players', error);

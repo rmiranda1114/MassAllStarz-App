@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Text, StyleSheet, View } from 'react-native'
-import axios from 'axios';
+import axios from '../../axios/axios'
 
 const UserTeams = ({ props }) => {
     const [teamData, setTeamData] = useState();
 
     const getTeamInfo = async () => {
         try {
-            const response = await axios.post('http://10.0.0.128:8000/teams/team', { team: props.team });
+            const response = await axios.post('/teams/team', { team: props.team });
             setTeamData(response.data);
         } catch (error) {
             console.log("Error fetching team data", error)

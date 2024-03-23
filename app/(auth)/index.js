@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Text, StyleSheet, View, ScrollView, TextInput, Pressable, Image, Alert } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useRouter } from 'expo-router';
-import axios from 'axios';
+import axios from '../../axios/axios';
 import AppContext from '../../context/AppContext';
 import { Feather } from '@expo/vector-icons';
 
@@ -23,7 +23,7 @@ const Login = () => {
                 email: email.toLocaleLowerCase(),
                 password: password
             }
-            const response = await axios.post('http://10.0.0.128:8000/users/login', userData);
+            const response = await axios.post('users/login', userData);
             
             if (response.status == 200) {
                 saveJWT("Token", response.data.accessToken);
@@ -51,7 +51,7 @@ const Login = () => {
             console.log("Unable to log in", error.response.status);
         }
     }
-
+    
     return (
       <ScrollView keyboardShouldPersistTaps={'always'}>
        

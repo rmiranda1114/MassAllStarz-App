@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import Attendance from '../../components/team/attendance';
-import axios from 'axios';
+import axios from '../../axios/axios';
 
 const Player = ({ props }) => {
     const [playerArray, setPlayerArray] = useState([]);
@@ -9,7 +9,7 @@ const Player = ({ props }) => {
 
     const fetchPlayer = async () => {    
         try {
-            const response = await axios.post('http://10.0.0.128:8000/players/player', {player: props.user.player});
+            const response = await axios.post('/players/player', {player: props.user.player});
             setPlayerArray(response.data);
         } catch (error) {
             console.log("Error fetching player data", error)

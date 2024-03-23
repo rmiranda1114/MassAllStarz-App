@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { View, Text, FlatList, StyleSheet, Pressable, TextInput } from "react-native";
 import AppState from '../../context/AppContext';
 import { useRouter } from 'expo-router';
-import axios from 'axios';
+import axios from '../../axios/axios'
 import { Ionicons } from '@expo/vector-icons';
 
 const Users = () => {
@@ -13,7 +13,7 @@ const Users = () => {
  
     const fetchUsers = async () => {
         try{
-            const response = await axios.get('http://10.0.0.128:8000/users');
+            const response = await axios.get('/users');
             setUsers(response.data);
         } catch(error){
             console.log("Error fetching users data", error)

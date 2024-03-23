@@ -19,6 +19,12 @@ module.exports = function (app){
     app.use(bodyParser.json());
     app.use(express.static('public'));
 
+    app.get("/", (req, res) => {
+        res.status(200).json({
+            msg: "Nodejs - App Engine is online"
+        });
+    });
+
     app.use('/players', playerRoutes);
     app.use('/agenda', agendaRoutes);
     app.use('/attendance', attendanceRoutes);

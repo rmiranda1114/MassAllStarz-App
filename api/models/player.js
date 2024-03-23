@@ -7,11 +7,12 @@ const playerAppSchema = new mongoose.Schema(
             required: true
         },
         playerPosition: {
-            type: String,
-            required: true
+            type: String
+            
         },
         playerNumber: {
-            type: String
+            type: String,
+            required: true
         },
         team: {
                 type: mongoose.Schema.Types.ObjectId,

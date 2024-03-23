@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
 import AppState from '../../context/AppContext';
 import { Ionicons } from '@expo/vector-icons';
-import axios from 'axios';
+import axios from '../../axios/axios'
 import { useRouter } from "expo-router";
 
 const Players = () => {
@@ -13,7 +13,7 @@ const Players = () => {
 
     const fetchPlayers = async () => {
         try{
-            const response = await axios.post('http://10.0.0.128:8000/players/byTeam', { playerTeam: selectTeam._id });
+            const response = await axios.post('/players/byTeam', { playerTeam: selectTeam._id });
             setPlayers(response.data);
         } catch(error){
             console.log("Error fetching player data", error)
@@ -33,7 +33,12 @@ const Players = () => {
                     <Ionicons name="arrow-back" size={30} color="black" />    
                 </Pressable>
                 <Text style={styles.headerText}>{selectTeam.name} Players List</Text>
-                <Pressable onPress={() => {selectTeam && router.push("/(app)/addPlayer")}}>
+                <Pressable onPress={() => {selectTeam && router.push({
+                            pathname:"(app)/addPlayer",
+                            params: {
+                                team: selectTeam._id
+                            }
+                        })}}>
                     <Ionicons name="add-circle" size={30} color="blue" />
                 </Pressable>
                 

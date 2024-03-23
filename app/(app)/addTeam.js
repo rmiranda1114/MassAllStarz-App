@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Text, StyleSheet, View, ScrollView, TextInput, Pressable, Alert } from 'react-native';
 import AppState from '../../context/AppContext';
-import axios from 'axios';
+import axios from '../../axios/axios'
 import { useRouter } from 'expo-router';
 
 const AddTeam = () => {
@@ -11,9 +11,9 @@ const AddTeam = () => {
 
     const handleSubmit = async () => {
         try{
-            const response = await axios.post('http://10.0.0.128:8000/teams', { team: teamName });
+            const response = await axios.post('/teams', { team: teamName });
             
-            if (response.status == 200) {
+            if (response.status == 201) {
                 Alert.alert('New Team Created');
                 router.replace('(app)/teams');
             } 

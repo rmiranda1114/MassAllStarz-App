@@ -3,7 +3,7 @@ import { View, Text, Alert, StyleSheet, Pressable } from "react-native";
 import AppState from '../../context/AppContext';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from 'expo-router';
-import axios from 'axios';
+import axios from '../../axios/axios'
 import { Ionicons } from '@expo/vector-icons';
 
 const Users = () => {
@@ -13,7 +13,7 @@ const Users = () => {
 
     const fetchUser = async () => {
         try {
-            const response = await axios.post('http://10.0.0.128:8000/users/user', { name: user.name });
+            const response = await axios.post('/users/user', { name: user.name });
             setUserData(response.data);
         } catch (error) {
             console.log("Error fetching user data", error)
@@ -22,7 +22,7 @@ const Users = () => {
 
     const deleteUser = async () => {
         try {
-            const response = await axios.post('http://10.0.0.128:8000/users/delete', { user: user._id });
+            const response = await axios.post('/users/delete', { user: user._id });
             setUser({});
             SecureStore.deleteItemAsync('Token');
             Alert.alert("Your account has been deleted");

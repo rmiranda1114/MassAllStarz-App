@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, StyleSheet, View, Pressable, Alert } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import moment from 'moment';
-import axios from 'axios';
+import axios from '../../axios/axios'
 import { AntDesign, FontAwesome5, Entypo } from '@expo/vector-icons';
 
 const markAttendance =() => {
@@ -32,7 +32,7 @@ const markAttendance =() => {
                 status: attendanceStatus,
                 date: currentDate.format("MMMM D, YYYY")
             }
-            const response = await axios.post('http://10.0.0.128:8000/attendance', attendanceData );
+            const response = await axios.post('/attendance', attendanceData );
             if (response.status === 200){
                 Alert.alert(`Attendance submitted for ${params.name}`)
                 router.replace('(app)/attendanceList')

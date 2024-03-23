@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Text, StyleSheet, View, Pressable } from 'react-native';
 import AppState from '../../context/AppContext';
 import moment from 'moment';
-import axios from 'axios';
+import axios from '../../axios/axios'
 import { useRouter } from 'expo-router'
 import { AntDesign } from '@expo/vector-icons';
 
@@ -28,7 +28,7 @@ const attendanceList = () => {
    
     const fetchPlayers = async () => {
         try{
-            const response = await axios.post('http://10.0.0.128:8000/players/byTeam', { playerTeam: selectTeam._id });
+            const response = await axios.post('/players/byTeam', { playerTeam: selectTeam._id });
             setPlayers(response.data);
         } catch(error){
             console.log("Error fetching player data", error)
@@ -37,7 +37,7 @@ const attendanceList = () => {
 
     const fetchAttendanceData = async () => {
         try{
-            const response = await axios.get('http://10.0.0.128:8000/attendance', {
+            const response = await axios.get('/attendance', {
                 params: {
                     date: currentDate.format("MMMM D, YYYY")
                 }

@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, ScrollView, Pressable, Alert } from 'react-nati
 import { useRouter } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
 import AppState from '../../context/AppContext';
-import axios from 'axios';
+import axios from '../../axios/axios'
 
 const TeamStats = () => {
     const { user } = useContext(AppState);
@@ -13,7 +13,7 @@ const TeamStats = () => {
    
     const getTeamInfo = async () => {
         try{
-            const response = await axios.post('http://10.0.0.128:8000/teams/team', {team: selectTeam._id});
+            const response = await axios.post('/teams/team', {team: selectTeam._id});
             
             setTeamData(response.data);
         } catch(error){
@@ -23,7 +23,7 @@ const TeamStats = () => {
 
     const updateTeam = async () => {  
         try{
-            const response = await axios.post('http://10.0.0.128:8000/teams/update', {teamData});
+            const response = await axios.post('/teams/update', {teamData});
             if ( response.status == 201) {
                 Alert.alert('Team has been updated');
                 router.replace('(app)/(drawer)/(tabs)/team');

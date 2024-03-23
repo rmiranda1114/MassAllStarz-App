@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, View, Text, ScrollView, TextInput, Pressable, Alert  } from "react-native";
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import axios from "axios";
+import axios from '../../axios/axios'
 
 const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$/;
@@ -71,7 +71,7 @@ const addPlayer = () => {
             }
 
             
-            const response = await axios.post('http://10.0.0.128:8000/users/new', userData)
+            const response = await axios.post('/users/new', userData)
             if (response.status == 200) {
                 Alert.alert("Successful", "User has been created");
                 setName("");

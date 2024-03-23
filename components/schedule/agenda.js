@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import moment from 'moment';
-import axios from 'axios';
+import axios from '../../axios/axios'
 
 
 const Agenda = ({ props }) => {
@@ -9,7 +9,7 @@ const Agenda = ({ props }) => {
 
     const getAgenda = async () => {
         try {
-            const response = await axios.post('http://10.0.0.128:8000/agenda/get', { date: moment().format('YYYY-MM-DD'), team: props.team });
+            const response = await axios.post('/agenda/get', { date: moment().format('YYYY-MM-DD'), team: props.team });
             setAgenda(response.data);
         } catch (error) {
             console.log("Unable to get Agenda Data", error)

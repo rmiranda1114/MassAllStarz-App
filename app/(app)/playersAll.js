@@ -5,24 +5,24 @@ import { useRouter } from 'expo-router';
 import axios from '../../axios/axios'
 import { Ionicons } from '@expo/vector-icons';
 
-const Teams = () => {
-    const { verifyAdminToken } = useContext(AppState)
-    const [teams, setTeams] = useState([]);
+const PlayerAll = () => {
+    const { verifyAdminToken } = useContext(AppState);
+    const [players, setPlayers] = useState([]);
     const [searchInput, setSearchInput] = useState("");
     const router = useRouter();
-    
-    const fetchTeams = async () => {
+ 
+    const fetchPlayers = async () => {
         try{
-            const response = await axios.get('/teams');
-            setTeams(response.data);
+            const response = await axios.get('/players');
+            setPlayers(response.data);
         } catch(error){
-            console.log("Error fetching teams data", error)
+            console.log("Error fetching players data", error)
         }
     }
 
     useEffect (()=> {
         verifyAdminToken();
-        fetchTeams();
+        fetchPlayers();
     },[])
 
 
@@ -41,26 +41,28 @@ const Teams = () => {
                 </View>
                 
             </View>
-            {teams.length > 0 && 
+            {players.length > 0 && 
             <View>
                 <FlatList 
-                    data={teams}
+                    data={players}
                     horizontal={false}
                     renderItem={({item}) => {
-                        if(item?.name.toLowerCase().includes(searchInput.toLowerCase())){
+                        if(item?.playerName.toLowerCase().includes(searchInput.toLowerCase())){
                             return (
                                 <Pressable 
-                                    style={styles.teamContainer}
+                                    style={styles.userContainer}
                                     key={item._id}
-                                    // onPress={() => router.push({
-                                    //     pathname:"/updateUser",
-                                    //     params: {
-                                    //         name: item.name
-                                    //     }
-                                    // })}
-                                    >
+                                    onPress={() => router.push({
+                                        pathname:"/updatePlayers",
+                                        params: {
+                                            _id: item._id
+                                        }
+                                    })}>
                                     <View>
-                                        <Text style={styles.text}>{item.name}</Text>   
+                                        <Text style={styles.text}>{item.playerName}</Text>
+                                        <Text>Number: {item.playerNumber}</Text>
+                                        <Text>Position: {item.playerPosition}</Text>
+                                        <Text>Team: {item.team.name}</Text>  
                                     </View>
                                 </Pressable>
                             )
@@ -68,9 +70,6 @@ const Teams = () => {
                     }}
                 />
             </View>}
-            <Pressable style={styles.button} onPress={() => router.push('(app)/addTeam')}>
-                <Text style={styles.buttonText}>Add Team</Text>
-            </Pressable>
         </View>
     ) 
 };
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 15
     },
-    teamContainer: {
+    userContainer: {
         flexDirection: 'row',
         margin: 10,
         marginLeft: 10,
@@ -105,19 +104,24 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 20
     },
-    button: {
-        padding: 10,
-        backgroundColor:'#9BDBFA',
-        width: 300,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        marginVertical: 15,
-        borderRadius: 8
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 10
     },
-    buttonText: {
-        textAlign: 'center',
-        fontWeight: '500'
+    block: {
+        width: 50,
+        height: 50,
+        borderRadius: 8,
+        padding: 10,
+        backgroundColor: "#4b6cb7",
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    text: {
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 })
 
-export default Teams;
+export default PlayerAll;

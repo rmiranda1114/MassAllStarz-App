@@ -19,6 +19,8 @@ const coachLayout = () => {
             <Stack.Screen name="myPlayer" options={{}} />
             <Stack.Screen name="myTeam" options={{}} />
             <Stack.Screen name="profile" options={{}} />
+            <Stack.Screen name="playersAll" options={{}} />
+            <Stack.Screen name="updatePlayers" options={{}} />
         </Stack>
     )
 };

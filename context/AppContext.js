@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from '../axios/axios';
 import React, { createContext, useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from "expo-router";
@@ -13,7 +13,7 @@ export const AppProvider = ({children}) => {
 
     const verifyToken = async () => {
         const data = await SecureStore.getItemAsync('Token');
-        const response = await axios.post('http://10.0.0.128:8000/users/verifyToken', { token: data})
+        const response = await axios.post('/users/verifyToken', { token: data})
         if (response.status == 403) {
             SecureStore.deleteItemAsync('Token');
             Alert.alert("Invalid Token");
@@ -27,7 +27,7 @@ export const AppProvider = ({children}) => {
 
     const verifyAdminToken = async () => {
         const data = await SecureStore.getItemAsync('Token');
-        const response = await axios.post('http://10.0.0.128:8000/users/verifyToken', { token: data})
+        const response = await axios.post('/users/verifyToken', { token: data})
         if (response.status == 403 || !response.data.admin) {
             SecureStore.deleteItemAsync('Token');
             setUser({});

@@ -10,4 +10,4 @@ if (!process.env.jwtPrivateKey && !process.env.jwtRefreshKey) {
     throw new Error('FATAL ERROR: jwtPrivateKey is not defined');
 }
 
-app.listen(port, ()=> console.log(`Listening on port ${port}`));
+app.listen(port, ()=> console.log(`Listening on port ${port}`)).setTimeout(500000);

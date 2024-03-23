@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, ScrollView, Pressable, Alert } from 'react-nati
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Dropdown } from 'react-native-element-dropdown';
 import AppState from '../../context/AppContext';
-import axios from 'axios';
+import axios from '../../axios/axios'
 
 const updateUser = () => {
     const { verifyAdminToken } = useContext(AppState);
@@ -20,7 +20,7 @@ const updateUser = () => {
 
     const fetchUser = async () => {
         try {
-            const response = await axios.post('http://10.0.0.128:8000/users/user', { name: params.name });
+            const response = await axios.post('/users/user', { name: params.name });
 
             setUser(response.data);
         } catch (error) {
@@ -30,7 +30,7 @@ const updateUser = () => {
 
     const fetchTeams = async () => {
         try {
-            const response = await axios.get('http://10.0.0.128:8000/teams');
+            const response = await axios.get('/teams');
             let teamsArray = [];
             for (let i = 0; i < response.data.length; i++) {
                 teamsArray.push({
@@ -46,7 +46,7 @@ const updateUser = () => {
 
     const fetchPlayers = async (playerTeam) => {
         try {
-            const response = await axios.post('http://10.0.0.128:8000/players/byTeam', { playerTeam });
+            const response = await axios.post('/players/byTeam', { playerTeam });
             let playerArray = [];
             for (let i = 0; i < response.data.length; i++) {
                 playerArray.push({
@@ -70,7 +70,7 @@ const updateUser = () => {
         }
 
         try {
-            const response = await axios.post('http://10.0.0.128:8000/users/update', updated);
+            const response = await axios.post('/users/update', updated);
             if (response.status == 200) {
                 Alert.alert('User has been updated');
                 router.replace('(app)/users');
@@ -78,6 +78,37 @@ const updateUser = () => {
         } catch (error) {
             console.log("Error updating user data", error)
         }
+    }
+
+    const deleteUser = async () => {
+        try {
+            const response = await axios.post('/users/delete', { user: user._id });;
+            Alert.alert("User has been deleted");
+            router.replace('(app)/users');
+        } catch (error) {
+            console.log("Error deleting user data", error)
+        }
+    }
+
+    const createAlert = () => {
+        Alert.alert(
+            "Delete User:",
+            'Are you sure you want to delete this user?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Confirm',
+                    onPress: () => deleteUser(),
+                    style: 'default'
+                }
+            ],
+            {
+                cancelable: true
+            }
+            )
     }
 
     useEffect(() => {
@@ -221,6 +252,11 @@ const updateUser = () => {
             >
                 <Text style={styles.buttonText}>Update User</Text>
             </Pressable>
+            <Pressable
+                    style={styles.deleteButton}
+                    onPress={() => createAlert()}>
+                        <Text>Delete User</Text>
+                </Pressable>
         </ScrollView>
 
     )
@@ -257,7 +293,7 @@ paddingHorizontal: 8
 button: {
     padding: 10,
 backgroundColor:'#9BDBFA',
-width: 300,
+width: 350,
 marginLeft: 'auto',
 marginRight: 'auto',
 marginVertical: 15,
@@ -266,6 +302,17 @@ borderRadius: 8
 buttonText: {
     textAlign: 'center',
 fontWeight: '500'
+},
+deleteButton: {
+    backgroundColor: 'red',
+    padding: 10,
+    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    width: 350,
+    marginLeft: 'auto',
+    marginRight: 'auto',
 }
 })
 

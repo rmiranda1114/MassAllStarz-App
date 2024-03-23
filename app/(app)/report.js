@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Text, StyleSheet, View, ScrollView, Pressable } from 'react-native';
 import AppState from '../../context/AppContext';
-import axios from 'axios';
+import axios from '../../axios/axios'
 import { DataTable } from 'react-native-paper';
 
 const Report = () => {
@@ -11,7 +11,7 @@ const Report = () => {
 
     const fetchAttendanceReport = async () => {
         try{
-            const response = await axios.post('http://10.0.0.128:8000/attendance/byTeam', {team: selectTeam._id});
+            const response = await axios.post('/attendance/byTeam', {team: selectTeam._id});
             setAttendanceData(response.data.report)
         }catch(error) {
             console.log('Error fetching attendance data', error)

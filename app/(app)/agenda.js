@@ -6,7 +6,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { FontAwesome5, Entypo } from '@expo/vector-icons';
 import AppState from '../../context/AppContext';
 import moment from 'moment';
-import axios from 'axios';
+import axios from '../../axios/axios'
 
 const Agenda = ()=> {
     const { user } = useContext(AppState);
@@ -37,7 +37,7 @@ const Agenda = ()=> {
             team: inputTeam
         }
         try{
-            const response = await axios.post('http://10.0.0.128:8000/agenda', agendaData);
+            const response = await axios.post('/agenda', agendaData);
             if(response.status == 200) {
                 Alert.alert("New Date has been added");
                 router.push("(app)/(tabs)/schedule");
@@ -61,7 +61,7 @@ const Agenda = ()=> {
     useEffect(() => {
         TeamArray();
     }, [])
-console.log(teamData)
+    
     return (
         <View style={styles.container}>
             <View style={styles.descriptionContainer}>

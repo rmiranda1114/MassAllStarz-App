@@ -18,6 +18,7 @@ const CustomDrawerContent = (props) => {
             <DrawerItem label={'Team Attendance'} onPress={() => router.push('(app)/(drawer)/(tabs)/team')}/>
             {user.admin && <DrawerItem label={'Users'} onPress={() => router.push('(app)/users')}/>}
             {user.admin && <DrawerItem label={'Teams'} onPress={() => router.push('(app)/teams')}/>}
+            {user.admin && <DrawerItem label={'Players'} onPress={() => router.push('(app)/playersAll')}/>}
             <DrawerItem label={'Profile'} onPress={() => router.push('(app)/profile')}/>
             <DrawerItem 
                 label={'Signout'}
