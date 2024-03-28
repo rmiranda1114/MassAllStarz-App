@@ -51,11 +51,11 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.methods.generateAuthToken = function () {
-    return jwt.sign({ _id: this._id, email: this.email, admin: this.admin, coach: this.coach }, process.env.jwtPrivateKey, {expiresIn: '15m'});
+    return jwt.sign({ _id: this._id, email: this.email, admin: this.admin, coach: this.coach }, process.env.jwtPrivateKey, {expiresIn: '7d'});
 }
 
 userSchema.methods.generateRefreshToken = function () {
-    return jwt.sign({ _id: this._id, email: this.email, admin: this.admin, coach: this.coach }, process.env.jwtRefreshKey, {expiresIn: '1d'});
+    return jwt.sign({ _id: this._id, email: this.email, admin: this.admin, coach: this.coach }, process.env.jwtRefreshKey, {expiresIn: '30d'});
 }
 
 userSchema.methods.sendAccessToken = function (req, res, accessToken) {

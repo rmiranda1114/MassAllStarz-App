@@ -62,7 +62,7 @@ const PlayerAll = () => {
                                         <Text style={styles.text}>{item.playerName}</Text>
                                         <Text>Number: {item.playerNumber}</Text>
                                         <Text>Position: {item.playerPosition}</Text>
-                                        <Text>Team: {item.team.name}</Text>  
+                                        <Text>Team: {item.team?.name}</Text>  
                                     </View>
                                 </Pressable>
                             )
@@ -77,7 +77,7 @@ const PlayerAll = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 30,
+        marginVertical: 30,
         backgroundColor: '#E3E3E3'
     },
     header: {

@@ -102,7 +102,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const players = await Player.find()
-        .populate('team');
+        .populate('team', 'name');
         res.status(201).json(players);
     } catch (error) {
         console.log('Error retrieving players', error);

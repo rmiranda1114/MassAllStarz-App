@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, StyleSheet, View, Pressable } from 'react-native';
+import { Text, StyleSheet, View, Pressable, ScrollView } from 'react-native';
 import AppState from '../../context/AppContext';
 import moment from 'moment';
 import axios from '../../axios/axios'
 import { useRouter } from 'expo-router'
-import { AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 
 const attendanceList = () => {
     const { user } = useContext(AppState);
@@ -66,9 +66,15 @@ const attendanceList = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>{selectTeam.name} Attendance List</Text>
-            
             <View style={styles.header}>
+                <Pressable onPress={()=> router.push("/(app)/(drawer)/(tabs)/team")}>
+                    <Ionicons name="arrow-back" size={30} color="black" />    
+                </Pressable>
+                <Text style={styles.headerText}>{selectTeam.name} Attendance List</Text>
+            </View>
+            
+            
+            <View style={styles.dateHeader}>
                 <AntDesign onPress={goToPrevDay} name="left" size={24} color="black" />
                 <Text>{formatDate(currentDate)}</Text>
                 <AntDesign onPress={goToNextDay} name="right" size={24} color="black" />
@@ -88,7 +94,7 @@ const attendanceList = () => {
                 </View>}
             </View>
 
-            <View>
+            <ScrollView>
                 {playerDataWithAttendance.map((item) => (
                     <Pressable
                         onPress={() => router.push({
@@ -113,7 +119,7 @@ const attendanceList = () => {
                         {item.status && <AntDesign  name="check" size={24} color="green" />}
                     </Pressable>
                 ))}
-            </View>
+            </ScrollView>
           
         </View>
       )
@@ -125,6 +131,11 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 30,
         backgroundColor: "white"
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center', 
+        gap: 20
     },
     headerText: {
         fontSize: 24,
@@ -152,7 +163,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    header: {
+    dateHeader: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
