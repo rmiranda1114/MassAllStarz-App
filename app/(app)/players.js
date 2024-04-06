@@ -58,15 +58,21 @@ const Players = () => {
                 data={players}
                 horizontal={false}
                 renderItem={({item}) => (
-                    <View style={styles.playerContainer}>
-                        <View style={styles.block}>
-                            <Text style={styles.blockText}>{item.playerNumber}</Text>
+                    <View style={styles.mainContainer}>
+                        <View style={styles.playerContainer}>
+                            <View style={styles.block}>
+                                <Text style={styles.blockText}>{item.playerNumber}</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.text}>{item.playerName}</Text>
+                                <Text>{item.playerPosition}</Text>
+                            </View>
                         </View>
                         <View>
-                            <Text style={styles.text}>{item.playerName}</Text>
-                            <Text>{item.playerPosition}</Text>
+                            <Text style={[styles.text, styles.redTextRight]}>{item.regCode}</Text>
                         </View>
                     </View>
+                    
                 )}
             /> : <Text>No Players Added Yet</Text>}
         </>
@@ -83,6 +89,11 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 24
+    },
+    mainContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     playerContainer: {
         flexDirection: 'row',
@@ -128,6 +139,10 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    redTextRight : {
+        color: 'red',
+        marginRight: 5
     }
 })
 

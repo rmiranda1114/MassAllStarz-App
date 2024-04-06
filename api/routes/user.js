@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/user');
+const { Player } = require('../models/player');
 const authorize = require('../middleware/authorize');
 
 
@@ -33,7 +34,10 @@ router.post('/login', async(req, res) => {
 
 router.post('/new', async(req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, regCode } = req.body;
+
+        let player = await Player.findOne({ regCode: regCode });
+        if (!player) return res.status(412).json({ message: 'Invalid Registration Code' });
 
         // Checks if user already exsist.
         let user = await User.findOne({ email: email });
@@ -47,7 +51,9 @@ router.post('/new', async(req, res) => {
             email: email,
             password: hashPassword,
             admin: false,
-            coach: false
+            coach: false,
+            team: [player.team],
+            player: [player._id]
         });
      
         //Store new coach
@@ -62,7 +68,7 @@ router.post('/new', async(req, res) => {
 
 router.post('/update', async(req, res) => {
     try {
-        const { email, admin, coach, team, player} = req.body;
+        const { email, admin, coach, team, player } = req.body;
 
         let user = await User.findOne({ email: email });
 

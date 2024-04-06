@@ -7,7 +7,7 @@ import axios from '../../axios/axios'
 const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$/;
 
-const addPlayer = () => {
+const createUser = () => {
     const router = useRouter();
     const userRef = useRef();
     const errRef = useRef();
@@ -29,6 +29,9 @@ const addPlayer = () => {
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const [regCode, setRegCode] = useState('');
+    const [regCodeFocus, setRegCodeFocus] = useState(false);
 
     //Set focus for screenreaders
     useEffect(() => {
@@ -59,7 +62,8 @@ const addPlayer = () => {
             const userData = {
                 name,
                 email: email.toLocaleLowerCase(),
-                password
+                password,
+                regCode
             };
 
             //prevent button enable with JS hack
@@ -81,6 +85,8 @@ const addPlayer = () => {
         } catch (error) {
             if (error.response.status == 409) {
                 Alert.alert('Email is already registered')
+            } else if (error.response.status == 412) {
+                Alert.alert('Invalid Registration Code') 
             } else if (error.request) {
                 Alert.alert('Unable to make request') 
             }
@@ -166,6 +172,19 @@ const addPlayer = () => {
                         secureTextEntry={true}
                     />
                 </View>
+                <View style={styles.inputContainer}>
+                    <View style={styles.label}>
+                        <Text style={styles.header}>Registration Code</Text>
+                    </View>
+                    <TextInput
+                        value={regCode}
+                        onChangeText={(text) => setRegCode(text)}
+                        style={styles.textInput} 
+                        placeholder="Ab1C23"
+                        onFocus={() => setRegCodeFocus(true)}
+                        onBlur={() => setRegCodeFocus(false)}
+                    />
+                </View>
                 
 
                 <Pressable 
@@ -234,4 +253,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default addPlayer;
+export default createUser;

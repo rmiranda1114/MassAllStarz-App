@@ -17,7 +17,12 @@ const playerAppSchema = new mongoose.Schema(
         team: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'team'
-            }
+            },
+        regCode: {
+            type: String,
+            required: true,
+            unique: true
+        }
     }
 );
 

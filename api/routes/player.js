@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const makeRegCode = require('../middleware/regCode');
 const { Player } = require('../models/player');
 const { Team } = require('../models/team');
 
 
-router.post("/add", async (req, res) => {
+router.post("/add", makeRegCode,  async (req, res) => {
     try {
         const { playerName, playerPosition, playerNumber, playerTeam } = req.body;
         const newPlayer = new Player({
             playerName: playerName,
             playerPosition: playerPosition,
             playerNumber: playerNumber,
-            team: playerTeam
+            team: playerTeam,
+            regCode: req.regCode
         });
         const savedPlayer = await newPlayer.save();
 

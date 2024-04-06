@@ -28,7 +28,7 @@ const PlayerAll = () => {
 
     return (
         <View style={styles.container}>
-             <View style={styles.header}>
+             <View style={styles.flexCenter}>
                 
                 <View style={styles.searchContainer}>
                     <Ionicons name='search' size={20} color='black' />
@@ -58,11 +58,16 @@ const PlayerAll = () => {
                                             _id: item._id
                                         }
                                     })}>
-                                    <View>
-                                        <Text style={styles.text}>{item.playerName}</Text>
-                                        <Text>Number: {item.playerNumber}</Text>
-                                        <Text>Position: {item.playerPosition}</Text>
-                                        <Text>Team: {item.team?.name}</Text>  
+                                    <View style={styles.flexCenter}>
+                                        <View style={{width: '50%'}}>
+                                            <Text style={styles.text}>{item.playerName}</Text>
+                                            <Text style={[styles.text, styles.redText]}>{item.regCode}</Text>
+                                        </View>
+                                        <View>
+                                            <Text>Number: {item.playerNumber}</Text>
+                                            <Text>Position: {item.playerPosition}</Text>
+                                            <Text>Team: {item.team?.name}</Text>
+                                        </View>                                      
                                     </View>
                                 </Pressable>
                             )
@@ -77,12 +82,14 @@ const PlayerAll = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginVertical: 30,
+        marginTop: 30,
+        marginBottom: 100,
         backgroundColor: '#E3E3E3'
-    },
-    header: {
+    }, 
+    flexCenter: {
         flexDirection: 'row',
-        alignItems: 'center'
+        justifyContent: 'space-evenly',
+        margin: 10
     },
     searchContainer: {
         flex: 1,
@@ -104,23 +111,12 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 20
     },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        margin: 10
-    },
-    block: {
-        width: 50,
-        height: 50,
-        borderRadius: 8,
-        padding: 10,
-        backgroundColor: "#4b6cb7",
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
     text: {
         fontSize: 16,
         fontWeight: 'bold'
+    },
+    redText : {
+        color: 'red'
     }
 })
 
